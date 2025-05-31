@@ -419,7 +419,6 @@ class Rule:
                     ctx=ast.Load()
                 )]
             ),
-            lineno=1, col_offset=0
         )
         ast.fix_missing_locations(tree)
         rule = Rule(type, tree)
@@ -763,12 +762,10 @@ class XMLMenuBuilder(object):
 
     def parse_rule(self, node):
         type = Rule.TYPE_INCLUDE if node.tag == 'Include' else Rule.TYPE_EXCLUDE
-        tree = ast.Expression(lineno=1, col_offset=0)
+        tree = ast.Expression(body=_ast_const('False'))
         expr = self.parse_bool_op(node, ast.Or())
         if expr:
             tree.body = expr
-        else:
-            tree.body = _ast_const('False')
         ast.fix_missing_locations(tree)
         return Rule(type, tree)
 
