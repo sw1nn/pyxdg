@@ -411,7 +411,7 @@ class Rule:
     def fromFilename(cls, type, filename):
         tree = ast.Expression(
             body=ast.Compare(
-                left=ast.Str(filename),
+                left=ast.Constant(filename),
                 ops=[ast.Eq()],
                 comparators=[ast.Attribute(
                     value=ast.Name(id='menuentry', ctx=ast.Load()),
@@ -799,7 +799,7 @@ class XMLMenuBuilder(object):
         elif tag == 'Category':
             category = node.text
             return ast.Compare(
-                left=ast.Str(category),
+                left=ast.Constant(category),
                 ops=[ast.In()],
                 comparators=[ast.Attribute(
                     value=ast.Name(id='menuentry', ctx=ast.Load()),
@@ -810,7 +810,7 @@ class XMLMenuBuilder(object):
         elif tag == 'Filename':
             filename = node.text
             return ast.Compare(
-                left=ast.Str(filename),
+                left=ast.Constant(filename),
                 ops=[ast.Eq()],
                 comparators=[ast.Attribute(
                     value=ast.Name(id='menuentry', ctx=ast.Load()),
